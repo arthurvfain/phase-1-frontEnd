@@ -17,3 +17,4 @@ function populateMenu(parkArray)
 }
 
 //likes to make top parks
+//sort parks by state in dropdown
