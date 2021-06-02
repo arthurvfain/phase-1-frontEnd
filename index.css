@@ -5,3 +5,12 @@ body {
 nav {
     background-color: darkolivegreen;
 }
+
+img {
+    width: 50px;
+    height: 60px;
+}
+
+.btn {
+    background-color: darkolivegreen;
+}

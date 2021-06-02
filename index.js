@@ -1,14 +1,16 @@
 document.addEventListener('DOMContentLoaded',fetchParks)
-document.addEventListener('DOMContentLoaded',getStuff)
-// let API_KEY = 'rYwtc500ImXhDQftDD2SbP96hTQsrzGQYYqs6WJZ'
-// let parkCode = 'acad'
-// function getStuff()
-// {
-//     fetch(`https://developer.nps.gov/api/v1/parks?parkCode=${parkCode}&api_key=${API_KEY}`).then(resp=>resp.json()).then(console.log)
-// }
 
 
 let parkIds = [];
+let allParks = document.querySelector('a.nav-link.active');
+const containerDiv = document.querySelector('div#park-cards');
+const firstDiv = document.querySelector('div#first-col');
+const secondDiv = document.querySelector('div#second-col');
+let alternator = 0;
+
+//Event Listeners ***********
+allParks.addEventListener('click', displayAll)
+
 
 
 //fetches the list of liked parks and passes them to the function populateMenu to filter and append the liked parks
@@ -22,13 +24,36 @@ function getStuff()
 function fetchParks(){
     fetch(`http://localhost:3000/parks`)
     .then(resp => resp.json())
-    .then(data => data.forEach(likedParks))
+    .then(data => {
+        parkIds = [];
+        firstDiv.innerHTML = ""
+        secondDiv.innerHTML = ""
+        data.forEach(likedParks);
+        getStuff();
+    })
+
+}
+
+function displayAll() {
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => {
+        document.querySelector('h1').textContent = "All Parks"
+        firstDiv.innerHTML = ""
+        secondDiv.innerHTML = ""
+        data.forEach(data => {
+            console.log(data)
+            appendPark(data)
+    })
+})
 }
 
 
 //create an array with all the park ids
 function likedParks(obj){
+    //console.log(obj.id)
     parkIds.push(obj.id)
+    //console.log(parkIds);
 }
 
 
@@ -58,14 +83,46 @@ function populateMenu(parkArray)
 
 //append park to DOM
 function appendPark(park){
-    let div = document.createElement('div');
-    let h2 = document.createElement('h2');
+    //console.log(park)
+    
 
-    h2.textContent = park.fullName;
+    let divCard = document.createElement('div');
+    divCard.className = "card col-6";
+    let parkImg = document.createElement('img');
+    parkImg.className = "card-img-top";
+    let divCardBody = document.createElement('div');
+    divCardBody.className = "card-body";
+    let h5 = document.createElement('h5');
+    h5.className = "card-title";
+    let p = document.createElement('p');
+    p.className = "card-text";
+    let parkBtn = document.createElement('a');
+    parkBtn.className = "btn";
+    let lineBreak = document.createElement('br');
 
-    div.append(h2);
+    if(park.images.length > 0){
 
-    document.querySelector('body').append(div);
+        parkImg.src = park.images[0].url;
+        h5.textContent = park.fullName;
+        p.textContent = park.description;
+        if (alternator % 2 === 0) {
+            divCardBody.append(h5, p, parkBtn, lineBreak);
+            divCard.append(parkImg, divCardBody);
+            firstDiv.append(divCard);
+            console.log('hello?')
+
+        }
+        else{
+            divCardBody.append(h5, p, parkBtn, lineBreak);
+            divCard.append(parkImg, divCardBody);
+            secondDiv.append(divCard);
+            console.log('hello')
+        }
+        
+    }
+
+    alternator++;
+    
 }
 
 //likes to make top parks
