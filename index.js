@@ -97,14 +97,16 @@ function appendPark(park){
     h5.className = "card-title";
     let p = document.createElement('p');
     p.className = "card-text";
-    let parkBtn = document.createElement('a');
+    let parkBtn = document.createElement('btn');
     parkBtn.className = "btn";
     let lineBreak = document.createElement('br');
     parkBtn.addEventListener('click', e => loadParkPage(e))
+    parkBtn.innerHTML = "Park Site"
 
     if(park.images.length > 0){
 
         parkImg.src = park.images[0].url;
+        
         h5.textContent = park.fullName;
         p.textContent = park.description;
         if (alternator % 2 === 0) {

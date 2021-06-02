@@ -13,11 +13,10 @@ img {
 
 img.card-img-top {
     height:250px;
+    width: 400px;
 }
 
-.btn {
-    background-color: darkolivegreen;
-}
+
 
 form > button {
     outline: auto;
@@ -26,9 +25,31 @@ form > button {
 
 h1 {
     text-align: center;
+    margin-bottom: 50px;
+    margin-top: 20px;
 }
 
 #first-col {
-    margin-left: 10%;
-    width:500px;
+    padding-left: 15%;
+    width:350px;
+    
+}
+
+#second-col {
+    padding-right: 15%;
+    padding-left: 15%;
+}
+
+.card.col-6 {
+    width: 400px;
+    margin-bottom: 50px;
+    height: auto;
+}
+
+.card-body > .btn{
+    background-color: darkolivegreen;
+    width: 90px;
+    height: 40px;
+    color: white;
+    
 }
