@@ -66,10 +66,10 @@ function populateMenu(parkArray)
         //console.log(parkIds)
         parkIds.forEach(id => {
             if (id === likedParkId){
-                console.log(`here is the id ${id}`)
-                 fetch(`http://localhost:3000/parks/${id}`)
-                 .then(resp => resp.json())
-                 .then(park => appendPark(park))
+                //console.log(`here is the id ${id}`)
+                fetch(`http://localhost:3000/parks/${id}`)
+                .then(resp => resp.json())
+                .then(park => appendPark(park))
             }
         })
     })
@@ -92,6 +92,7 @@ function appendPark(park){
     parkImg.className = "card-img-top";
     let divCardBody = document.createElement('div');
     divCardBody.className = "card-body";
+    divCardBody.id = park.id
     let h5 = document.createElement('h5');
     h5.className = "card-title";
     let p = document.createElement('p');
@@ -99,6 +100,7 @@ function appendPark(park){
     let parkBtn = document.createElement('a');
     parkBtn.className = "btn";
     let lineBreak = document.createElement('br');
+    parkBtn.addEventListener('click', e => loadParkPage(e))
 
     if(park.images.length > 0){
 
@@ -109,20 +111,28 @@ function appendPark(park){
             divCardBody.append(h5, p, parkBtn, lineBreak);
             divCard.append(parkImg, divCardBody);
             firstDiv.append(divCard);
-            console.log('hello?')
+            
 
         }
         else{
             divCardBody.append(h5, p, parkBtn, lineBreak);
             divCard.append(parkImg, divCardBody);
             secondDiv.append(divCard);
-            console.log('hello')
+            
         }
         
     }
 
     alternator++;
     
+}
+
+function loadParkPage(e) {
+    let parkId = e.path[1].id;
+
+    fetch(`http://localhost:3000/parks/${parkId}`)
+    .then(res => res.json())
+    .then(data => window.open(data.url))
 }
 
 //likes to make top parks
