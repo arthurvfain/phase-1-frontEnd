@@ -59,7 +59,7 @@ function displayAll() {
         document.querySelector('h1').textContent = "All Parks"
         containerDiv.innerHTML = "";
         data.forEach(data => {
-            console.log(data)
+            //console.log(data)
             appendPark(data)
     })
 })
@@ -120,6 +120,9 @@ function appendPark(park){
     let lineBreak = document.createElement('br');
     parkBtn.addEventListener('click', e => loadParkPage(e))
     parkBtn.innerHTML = "Park Site"
+    let likeBtn = document.createElement('btn');
+    likeBtn.className = 'btn';
+    
 
     if(park.images.length > 0){
     
@@ -128,7 +131,7 @@ function appendPark(park){
         h5.textContent = park.fullName;
         p.textContent = park.description;
 
-        divCardBody.append(h5, p, parkBtn, lineBreak);
+        divCardBody.append(h5, p, parkBtn, likeBtn, lineBreak);
         divCard.append(parkImg, divCardBody);
         containerDiv.append(divCard);
         console.log('iran!')
