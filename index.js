@@ -191,7 +191,7 @@ function filterByState(e) {
     .then(data => data.forEach(obj => {
         let parkState = obj.states
         
-        if (parkState === dropdownState){
+        if (parkState.includes(dropdownState)){
             appendPark(obj);
             document.querySelector('h1').textContent = dropdownState + " " + "Parks"
         }
