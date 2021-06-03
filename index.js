@@ -40,8 +40,7 @@ function fetchParks(){
     .then(resp => resp.json())
     .then(data => {
         parkIds = [];
-        firstDiv.innerHTML = ""
-        secondDiv.innerHTML = ""
+        containerDiv.innerHTML = ""
         data.forEach(likedParks);
         getStuff();
     })
@@ -53,8 +52,7 @@ function displayAll() {
     .then(resp => resp.json())
     .then(data => {
         document.querySelector('h1').textContent = "All Parks"
-        firstDiv.innerHTML = ""
-        secondDiv.innerHTML = ""
+        containerDiv.innerHTML = "";
         data.forEach(data => {
             console.log(data)
             appendPark(data)
@@ -106,8 +104,8 @@ function appendPark(park){
     parkImg.className = "card-img-top";
     let divCardBody = document.createElement('div');
     divCardBody.className = "card-body";
-    divCardBody.id = 'card-booty'
-    //divCardBody.id = park.id
+    //divCardBody.id = 'card-booty'
+    divCardBody.id = park.id
     let h5 = document.createElement('h5');
     h5.className = "card-title";
     let p = document.createElement('p');
@@ -151,6 +149,7 @@ function appendPark(park){
 
 function loadParkPage(e) {
     let parkId = e.path[1].id;
+    //console.log(e.path[1].id)
 
     fetch(`http://localhost:3000/parks/${parkId}`)
     .then(res => res.json())
@@ -172,8 +171,7 @@ function appendStates(state) {
 
 
 function filterByState(e) {
-    firstDiv.innerHTML = ""
-    secondDiv.innerHTML = ""
+    containerDiv.innerHTML = ""
     let dropdownState = e.target.innerText;
 
     fetch(`http://localhost:3000/parks`)
