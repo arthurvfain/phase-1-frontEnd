@@ -22,6 +22,7 @@ allParks.addEventListener('click', displayAll)
 dropdownStates.addEventListener('click', filterByState)
 dropdownActivity.addEventListener('click', filterByActivity)
 npsImg.addEventListener('click', fetchLikedParks)
+document.querySelector("#liked-parks").addEventListener('click', fetchLikedParks)
 
 
 
