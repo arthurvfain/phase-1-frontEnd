@@ -70,6 +70,6 @@ h1 {
     margin: 2rem;
   }
 
-#card-booty {
+.card-body {
     width: 30rem;
   }
