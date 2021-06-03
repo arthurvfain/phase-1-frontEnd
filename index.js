@@ -101,12 +101,13 @@ function appendPark(park){
     
 
     let divCard = document.createElement('div');
-    divCard.className = "card col-6";
+    divCard.className = "card";
     let parkImg = document.createElement('img');
     parkImg.className = "card-img-top";
     let divCardBody = document.createElement('div');
     divCardBody.className = "card-body";
-    divCardBody.id = park.id
+    divCardBody.id = 'card-booty'
+    //divCardBody.id = park.id
     let h5 = document.createElement('h5');
     h5.className = "card-title";
     let p = document.createElement('p');
@@ -118,24 +119,29 @@ function appendPark(park){
     parkBtn.innerHTML = "Park Site"
 
     if(park.images.length > 0){
-
+    
         parkImg.src = park.images[0].url;
         
         h5.textContent = park.fullName;
         p.textContent = park.description;
-        if (alternator % 2 === 0) {
-            divCardBody.append(h5, p, parkBtn, lineBreak);
-            divCard.append(parkImg, divCardBody);
-            firstDiv.append(divCard);
+
+        divCardBody.append(h5, p, parkBtn, lineBreak);
+        divCard.append(parkImg, divCardBody);
+        containerDiv.append(divCard);
+        console.log('iran!')
+        // if (alternator % 2 === 0) {
+        //     divCardBody.append(h5, p, parkBtn, lineBreak);
+        //     divCard.append(parkImg, divCardBody);
+        //     firstDiv.append(divCard);
             
 
-        }
-        else{
-            divCardBody.append(h5, p, parkBtn, lineBreak);
-            divCard.append(parkImg, divCardBody);
-            secondDiv.append(divCard);
+        // }
+        // else{
+        //     divCardBody.append(h5, p, parkBtn, lineBreak);
+        //     divCard.append(parkImg, divCardBody);
+        //     secondDiv.append(divCard);
             
-        }
+        // }
         
     }
 

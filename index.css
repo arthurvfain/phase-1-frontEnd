@@ -46,6 +46,17 @@ h1 {
     height: auto;
 }
 
+.card {
+    text-align: center;
+    border: grey solid 1px;
+    padding: 1rem;
+    width: 15rem;
+    height: 25rem;
+    display: inline-grid;
+    margin: 1rem 2rem;
+    box-shadow: 3px 4px grey
+  }
+
 .card-body > .btn{
     background-color: darkolivegreen;
     width: 90px;
@@ -53,3 +64,11 @@ h1 {
     color: white;
     
 }
+
+#park-cards {
+    margin: 2rem;
+  }
+
+#card-booty {
+    width: 30rem;
+  }
