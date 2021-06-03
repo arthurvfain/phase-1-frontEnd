@@ -88,9 +88,17 @@ h1 {
 
 .card-text {
     text-align: left;
+    width: 90%;
+    margin-right: 5%;
 }
 
-.btn {
-    margin-left: 10%;
-    margin-right: 10%;
+btn.btn.like {
+    background-color: darkolivegreen;
+    width: 90px;
+    height: 40px;
+    color: white;
+    position: static;
+}
+btn.btn {
+    margin-right: 20%;
 }

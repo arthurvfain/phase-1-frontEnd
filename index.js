@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded',fetchParks)
+document.addEventListener('DOMContentLoaded',fetchLikedParks)
 document.addEventListener('DOMContentLoaded', loadStates)
 document.addEventListener('DOMContentLoaded', loadActivities)
 
@@ -11,6 +11,7 @@ const secondDiv = document.querySelector('div#second-col');
 const dropdownStates = document.querySelector('ul.dropdown-menu');
 const dropdownActivity = document.querySelector('ul.dropdown-menu#activities')
 const dropdownMenu = document.querySelector('li.nav-item.dropdown');
+const npsImg = document.querySelector('img#NPS');
 let activities = [];
 let uniqueActivities = [];
 let alternator = 0;
@@ -20,6 +21,7 @@ let stateCodes = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'H
 allParks.addEventListener('click', displayAll)
 dropdownStates.addEventListener('click', filterByState)
 dropdownActivity.addEventListener('click', filterByActivity)
+npsImg.addEventListener('click', fetchLikedParks)
 
 
 
@@ -35,19 +37,20 @@ function loadStates() {
 //fetches the list of liked parks and passes them to the function populateMenu to filter and append the liked parks
 function getStuff()
 {
-    fetch(`http://localhost:3000/likes`).then(resp=>resp.json()).then(data => populateMenu(data))
+    fetch(`http://localhost:3000/parks`).then(resp=>resp.json()).then(data => populateMenu(data))
 }
 
 
 //fetches all parks and pushes each parks id to the parkIds array
-function fetchParks(){
+function fetchLikedParks(){
     fetch(`http://localhost:3000/parks`)
     .then(resp => resp.json())
     .then(data => {
         parkIds = [];
         containerDiv.innerHTML = ""
+        document.querySelector('h1').textContent = "Liked Parks"
         data.forEach(likedParks);
-        getStuff();
+        //getStuff();
     })
 
 }
@@ -70,33 +73,16 @@ function displayAll() {
 function likedParks(obj){
     //console.log(obj.id)
     parkIds.push(obj.id)
+    
+
+    if (obj.isLiked) {
+        appendPark(obj)
+    }
     //console.log(parkIds);
 }
 
 
-//filters parks for parks that have been liked
-function populateMenu(parkArray)
-{
-    parkArray.forEach(obj => {
-        let likedParkId = obj.parkId
-        //console.log(likedParkId)
-        //console.log(parkIds)
-        parkIds.forEach(id => {
-            if (id === likedParkId){
-                //console.log(`here is the id ${id}`)
-                fetch(`http://localhost:3000/parks/${id}`)
-                .then(resp => resp.json())
-                .then(park => appendPark(park))
-            }
-        })
-    })
-    
-    //console.log(parkArray)
-    
 
-    
-
-}
 
 //append park to DOM
 function appendPark(park){
@@ -121,7 +107,15 @@ function appendPark(park){
     parkBtn.addEventListener('click', e => loadParkPage(e))
     parkBtn.innerHTML = "Park Site"
     let likeBtn = document.createElement('btn');
-    likeBtn.className = 'btn';
+    likeBtn.className = 'btn like';
+
+    if (park.isLiked === true){
+        likeBtn.textContent = "Unlike"
+    }
+
+    likeBtn.textContent = "Like"
+    likeBtn.id = park.id
+    likeBtn.addEventListener('click', postLike)
     
 
     if(park.images.length > 0){
@@ -135,19 +129,7 @@ function appendPark(park){
         divCard.append(parkImg, divCardBody);
         containerDiv.append(divCard);
         console.log('iran!')
-        // if (alternator % 2 === 0) {
-        //     divCardBody.append(h5, p, parkBtn, lineBreak);
-        //     divCard.append(parkImg, divCardBody);
-        //     firstDiv.append(divCard);
-            
-
-        // }
-        // else{
-        //     divCardBody.append(h5, p, parkBtn, lineBreak);
-        //     divCard.append(parkImg, divCardBody);
-        //     secondDiv.append(divCard);
-            
-        // }
+      
         
     }
 
@@ -239,5 +221,97 @@ function loadActivities() {
         uniqueActivities.forEach(appendDropdown)
   })
 }
+
+function postLike(e) {
+    let targetId = e.target.id
+    //console.log(targetId)
+    //console.log(e)
+    e.preventDefault()
+
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => {
+        data.forEach(obj => {
+            checkForLike(obj,targetId)
+            //console.log(targetId)
+        })
+    
+    })
+    console.log(e.path[4].children[1].children[0].textContent)
+    if (e.path[4].children[1].children[0].textContent === "Liked Parks"){
+        e.target.parentElement.parentElement.remove()
+        e.target.textContent = "Like"
+    }
+    //location.reload()
+    e.target.textContent = "Unlike"
+}
+
+function checkForLike(obj, id) {
+    let park = obj.id;
+
+    
+    if (id === park){
+        if(obj.isLiked === true){
+            falseObj = {
+                isLiked: false
+            }
+           
+            patchDb(obj.id, falseObj);
+
+        }
+        else if (obj.isLiked === false){
+            trueObj = {
+                isLiked: true
+            }
+            
+            patchDb(obj.id, trueObj);
+        }
+        
+
+    }
+    else {
+       return
+    }
+}
+
+function postDb(obj){
+    fetch(`http://localhost:3000/parks`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    })
+}
+
+function patchDb(id, obj){
+    fetch(`http://localhost:3000/parks/${id}`,{
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(obj)
+            })
+}
 //likes to make top parks
 //sort parks by state in dropdown
+
+function putLikes(){
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => data.forEach(obj => {
+        console.log(obj.id)
+        pushLike(obj.id)
+    }))
+}
+function pushLike(id){
+    fetch(`http://localhost:3000/parks/${id}`,{
+        method: "PATCH",
+        headers: {
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+            isLiked: false
+        })
+    })
+}
