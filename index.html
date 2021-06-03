@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script defer src = 'index.js'></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" 
     rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
     <link href="index.css" rel="stylesheet">
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-light">
+     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="#"><img class="" src="https://www.arcgis.com/sharing/rest/content/items/b9ea7ae3fd3d4cfcbbd3b3052df6b787/resources/NPS-Transparent-Logo__1598367821603.png" alternative = "NPS Logo" ></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,15 +24,14 @@
                 <a class="nav-link active" aria-current="page" href="#">All Parks</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdownNavbar" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
-                  Dropdown
+                <a class="nav-link dropdown-toggle" href="#" id="dropdownNavbar" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                  States
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownNavbar">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
+                <ul class="dropdown-menu" aria-labelledby="dropdownNavbar">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -44,7 +43,8 @@
             </form>
           </div>
         </div>
-      </nav>
+      </nav> 
+
 
 
   <div class="container-fluid">
@@ -58,5 +58,8 @@
     </div>
   </div>
 
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script src = 'index.js'></script>
 </body>
 </html>

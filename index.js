@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded',fetchParks)
+document.addEventListener('DOMContentLoaded', loadStates)
 
 
 let parkIds = [];
@@ -6,11 +7,24 @@ let allParks = document.querySelector('a.nav-link.active');
 const containerDiv = document.querySelector('div#park-cards');
 const firstDiv = document.querySelector('div#first-col');
 const secondDiv = document.querySelector('div#second-col');
+const dropdownUl = document.querySelector('ul.dropdown-menu');
+const dropdownMenu = document.querySelector('li.nav-item.dropdown');
 let alternator = 0;
+let stateCodes = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY']
 
 //Event Listeners ***********
 allParks.addEventListener('click', displayAll)
+dropdownUl.addEventListener('click', filterByState)
 
+
+
+//Add all state coades to dropdown menu in navbar
+function loadStates() {
+    dropdownUl.innerHTML = "";
+    stateCodes.forEach(appendStates)
+}
+    
+    
 
 
 //fetches the list of liked parks and passes them to the function populateMenu to filter and append the liked parks
@@ -137,5 +151,35 @@ function loadParkPage(e) {
     .then(data => window.open(data.url))
 }
 
+//appends state code to dropdown 
+function appendStates(state) {
+    //console.log(state)
+    let li = document.createElement('li');
+    let stateCode = document.createElement('a');
+    stateCode.className = "dropdown-item";
+
+    stateCode.textContent = state;
+    li.append(stateCode);
+    dropdownUl.append(li);
+}
+
+
+
+function filterByState(e) {
+    firstDiv.innerHTML = ""
+    secondDiv.innerHTML = ""
+    let dropdownState = e.target.innerText;
+
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => data.forEach(obj => {
+        let parkState = obj.states
+        
+        if (parkState === dropdownState){
+            appendPark(obj);
+            document.querySelector('h1').textContent = dropdownState + " " + "Parks"
+        }
+    }))
+}
 //likes to make top parks
 //sort parks by state in dropdown
