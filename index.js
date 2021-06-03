@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded',fetchParks)
 document.addEventListener('DOMContentLoaded', loadStates)
 document.addEventListener('DOMContentLoaded', loadActivities)
 
-
+//Static Elements *********************
 let parkIds = [];
 let allParks = document.querySelector('a.nav-link.active');
 const containerDiv = document.querySelector('div#park-cards');
@@ -19,6 +19,7 @@ let stateCodes = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'H
 //Event Listeners ***********
 allParks.addEventListener('click', displayAll)
 dropdownStates.addEventListener('click', filterByState)
+dropdownActivity.addEventListener('click', filterByActivity)
 
 
 
@@ -197,6 +198,26 @@ function filterByState(e) {
     }))
 }
 
+//filters by the activity dropdown selected and displays all parks that have selected activity as one
+function filterByActivity(e) {
+    containerDiv.innerHTML = ""
+    let dropdownItem = e.target.innerText
+
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => data.forEach(obj => {
+        let parkActivities = obj.activities
+        parkActivities.forEach(act => {
+            let parkAct = act.name
+            if(parkAct === dropdownItem){
+                appendPark(obj)
+                document.querySelector('h1').textContent = `Parks with ${dropdownItem}`
+            }
+        })
+    }))
+}
+
+//loads all activities from all parks and pushes them to an array, then passes only the unique values to separate unique array, which is used to populate the activites dropdown
 function loadActivities() {
     fetch(`http://localhost:3000/parks`)
     .then(resp => resp.json())
