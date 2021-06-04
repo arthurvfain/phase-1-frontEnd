@@ -12,6 +12,7 @@ const dropdownStates = document.querySelector('ul.dropdown-menu');
 const dropdownActivity = document.querySelector('ul.dropdown-menu#activities')
 const dropdownMenu = document.querySelector('li.nav-item.dropdown');
 const npsImg = document.querySelector('img#NPS');
+
 let activities = [];
 let uniqueActivities = [];
 let alternator = 0;
@@ -111,10 +112,12 @@ function appendPark(park){
     likeBtn.className = 'btn like';
 
     if (park.isLiked === true){
+        
         likeBtn.textContent = "Unlike"
     }
-
-    likeBtn.textContent = "Like"
+    else{
+        likeBtn.textContent = "Like"
+    }
     likeBtn.id = park.id
     likeBtn.addEventListener('click', postLike)
     
@@ -129,7 +132,7 @@ function appendPark(park){
         divCardBody.append(h5, p, parkBtn, likeBtn, lineBreak);
         divCard.append(parkImg, divCardBody);
         containerDiv.append(divCard);
-        console.log('iran!')
+        
       
         
     }
@@ -228,6 +231,12 @@ function postLike(e) {
     //console.log(targetId)
     //console.log(e)
     e.preventDefault()
+    if (e.target.textContent === "Like"){
+        e.target.textContent = "Unlike"
+    }
+    else {
+        e.target.textContent = "Like"
+    }
 
     fetch(`http://localhost:3000/parks`)
     .then(resp => resp.json())
@@ -238,19 +247,19 @@ function postLike(e) {
         })
     
     })
-    console.log(e.path[4].children[1].children[0].textContent)
+
     if (e.path[4].children[1].children[0].textContent === "Liked Parks"){
         e.target.parentElement.parentElement.remove()
-        e.target.textContent = "Like"
+        e.target.textContent = "Unlike"
     }
+
     //location.reload()
-    e.target.textContent = "Unlike"
+    //e.target.textContent = "Like"
 }
 
 function checkForLike(obj, id) {
     let park = obj.id;
 
-    
     if (id === park){
         if(obj.isLiked === true){
             falseObj = {
@@ -266,8 +275,7 @@ function checkForLike(obj, id) {
             }
             
             patchDb(obj.id, trueObj);
-        }
-        
+        }     
 
     }
     else {
@@ -316,3 +324,4 @@ function pushLike(id){
         })
     })
 }
+

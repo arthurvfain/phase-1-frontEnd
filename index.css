@@ -12,8 +12,8 @@ img {
 }
 
 img.card-img-top {
-    height:250px;
-    width: 400px;
+    object-fit:inherit;
+    height: 250px;
 }
 
 
@@ -50,13 +50,14 @@ h1 {
     text-align: center;
     border: grey solid 1px;
     padding: 1rem;
-    width: 27rem;
-    height: 35rem;
+    width: 25%;
+    height:100%;
     display: inline-grid;
-    margin: 1rem 2rem;
+    margin-bottom: 20px;
     box-shadow: 3px 4px grey;
     margin-left: 5%;
     border-radius: 10px;
+    flex-basis: auto;
   }
 
 .card-body > .btn{
@@ -73,7 +74,7 @@ h1 {
   }
 
 .card-body {
-    width: 30rem;
+    width: 100%;
     text-align: center;
   }
 
@@ -88,8 +89,8 @@ h1 {
 
 .card-text {
     text-align: left;
-    width: 90%;
-    margin-right: 5%;
+    width: 100%;
+    
 }
 
 btn.btn.like {
@@ -98,6 +99,8 @@ btn.btn.like {
     height: 40px;
     color: white;
     position: static;
+    margin-right: 0%;
+    margin-left: 10%;
 }
 btn.btn {
     margin-right: 20%;
