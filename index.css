@@ -100,7 +100,8 @@ btn.btn.like {
     color: white;
     position: static;
     margin-right: 0%;
-    margin-left: 10%;
+    margin-left: 20%;
+    text-align: center;
 }
 btn.btn {
     margin-right: 20%;

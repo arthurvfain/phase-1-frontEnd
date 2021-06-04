@@ -12,7 +12,8 @@ const dropdownStates = document.querySelector('ul.dropdown-menu');
 const dropdownActivity = document.querySelector('ul.dropdown-menu#activities')
 const dropdownMenu = document.querySelector('li.nav-item.dropdown');
 const npsImg = document.querySelector('img#NPS');
-
+const searchForm = document.querySelector('form.d-flex');
+let searchArray = [];
 let activities = [];
 let uniqueActivities = [];
 let alternator = 0;
@@ -24,6 +25,7 @@ dropdownStates.addEventListener('click', filterByState)
 dropdownActivity.addEventListener('click', filterByActivity)
 npsImg.addEventListener('click', fetchLikedParks)
 document.querySelector("#liked-parks").addEventListener('click', fetchLikedParks)
+searchForm.addEventListener('submit', searchPark)
 
 
 
@@ -325,3 +327,28 @@ function pushLike(id){
     })
 }
 
+
+function searchPark(e) {
+    e.preventDefault()
+    containerDiv.innerHTML = ""
+    searchArray = [];
+    let searchWord = e.target[0].value
+    fetch(`http://localhost:3000/parks`)
+    .then(resp => resp.json())
+    .then(data => {
+        data.forEach(obj => searchFilter(obj, searchWord))
+    })
+
+}
+
+function searchFilter(obj, searchWord) {
+    let pName = obj.name
+    let lowerCaseSearch = searchWord.toLowerCase()
+    //console.log(pName.toLowerCase())
+    var x = pName.toLowerCase().search(`${lowerCaseSearch}`)
+
+    console.log(x)
+    if (x === 0) {
+        appendPark(obj)
+    }
+}
