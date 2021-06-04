@@ -351,4 +351,5 @@ function searchFilter(obj, searchWord) {
     if (x === 0) {
         appendPark(obj)
     }
+    document.querySelector('h1').textContent = `Results for "${searchWord}"`
 }
