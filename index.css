@@ -57,6 +57,10 @@ h1 {
     box-shadow: 3px 4px grey;
     margin-left: 5%;
     border-radius: 10px;
+    border-style: groove;
+    border-color: darkolivegreen;
+    border-width: 5px;
+    background-color:rgb(220, 223, 217);
     /* flex-basis: auto; */
   }
 
@@ -76,6 +80,8 @@ h1 {
 .card-body {
     width: 100%;
     text-align: center;
+    
+    margin-top: 5px;
   }
 
   h5 {
@@ -90,7 +96,6 @@ h1 {
 .card-text {
     text-align: left;
     width: 100%;
-    
 }
 
 btn.btn.like {
